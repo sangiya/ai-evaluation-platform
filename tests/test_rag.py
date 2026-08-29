@@ -20,6 +20,7 @@ class TestRagEvaluate:
             relevant=["d1", "d2"],
             answer="Paris is the capital of France",
             context="Paris is the capital of France and a great city",
+            query="What is the capital of France",
         )]
         m = rag_evaluate(samples)
         assert m.context_precision == pytest.approx(1.0)
@@ -53,9 +54,10 @@ class TestRagEvaluate:
         assert m.context_recall == pytest.approx(0.5)
 
     def test_hallucinated_answer_lowers_faithfulness(self):
+        # No word overlap between answer and context → faithfulness near zero
         samples = [_sample(
-            answer="Quantum entanglement is a physics phenomenon",
-            context="France is a country in Europe",
+            answer="Python programming language created by Guido van Rossum",
+            context="Photosynthesis converts sunlight chlorophyll glucose oxygen",
         )]
         m = rag_evaluate(samples)
-        assert m.answer_faithfulness < 0.2
+        assert m.answer_faithfulness < 0.1
