@@ -1,0 +1,5 @@
+numpy==1.26.4
+scikit-learn==1.5.2
+tiktoken==0.7.0
+pytest==8.3.3
+pytest-cov==5.0.0
